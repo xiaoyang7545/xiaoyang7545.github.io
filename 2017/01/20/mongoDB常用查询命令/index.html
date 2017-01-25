@@ -1,0 +1,669 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="增删改查操作查询12345678910111213db.tablename.find(&amp;#123;x:1&amp;#125;) //查询x为1的数据db.tablename.find(&amp;#123;m:&amp;#123;$exists:true&amp;#125;&amp;#125;) //查询存在m字段的数据db.tablename.find().skip(3).limit(2).sort(&amp;#123;x:1&amp;#125;)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongoDB常用查询命令">
+<meta property="og:url" content="http://yoursite.com/2017/01/20/mongoDB常用查询命令/index.html">
+<meta property="og:site_name" content="小样的个人空间">
+<meta property="og:description" content="增删改查操作查询12345678910111213db.tablename.find(&amp;#123;x:1&amp;#125;) //查询x为1的数据db.tablename.find(&amp;#123;m:&amp;#123;$exists:true&amp;#125;&amp;#125;) //查询存在m字段的数据db.tablename.find().skip(3).limit(2).sort(&amp;#123;x:1&amp;#125;)">
+<meta property="og:updated_time" content="2017-01-20T09:06:39.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mongoDB常用查询命令">
+<meta name="twitter:description" content="增删改查操作查询12345678910111213db.tablename.find(&amp;#123;x:1&amp;#125;) //查询x为1的数据db.tablename.find(&amp;#123;m:&amp;#123;$exists:true&amp;#125;&amp;#125;) //查询存在m字段的数据db.tablename.find().skip(3).limit(2).sort(&amp;#123;x:1&amp;#125;)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6379416691406800000',
+      author: 'xiaoyang'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/20/mongoDB常用查询命令/"/>
+
+
+
+
+
+  <title> mongoDB常用查询命令 | 小样的个人空间 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小样的个人空间</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/20/mongoDB常用查询命令/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="zhiqin_guo">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="小样的个人空间">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="小样的个人空间" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mongoDB常用查询命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T16:39:56+08:00">
+                2017-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/20/mongoDB常用查询命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/20/mongoDB常用查询命令/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="增删改查操作"><a href="#增删改查操作" class="headerlink" title="增删改查操作"></a>增删改查操作</h1><h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">db.tablename.find(&#123;x:1&#125;) //查询x为1的数据</div><div class="line">db.tablename.find(&#123;m:&#123;<span class="variable">$exists</span>:<span class="literal">true</span>&#125;&#125;) //查询存在m字段的数据</div><div class="line">db.tablename.find().skip(3).limit(2).sort(&#123;x:1&#125;)  //skip跳过条数，<span class="built_in">limit</span>限制条数，sort按x升序排序&#123;x:-1&#125;为降序</div><div class="line">db.tablename.find(&#123;<span class="variable">$test</span>:&#123;<span class="variable">$search</span>:<span class="string">"aa"</span>&#125;&#125;) //进行查找含有aa的全文查询</div><div class="line">db.tablename.find(&#123;<span class="variable">$test</span>:&#123;<span class="variable">$search</span>:<span class="string">"aa bb"</span>&#125;&#125;) //进行查找含有aa或bb的全文查询</div><div class="line">db.tablename.find(&#123;<span class="variable">$test</span>:&#123;<span class="variable">$search</span>:<span class="string">"aa bb -cc"</span>&#125;&#125;) //进行查找含有aa或bb或不含有cc的全文查询</div><div class="line">db.tablename.find(&#123;<span class="variable">$test</span>:&#123;<span class="variable">$search</span>:<span class="string">"\"aa\" \"bb\" \"cc\""</span>&#125;&#125;) //进行查找含有aa,bb且cc的全文查询</div><div class="line">db.tablename.find(&#123;<span class="variable">$test</span>:&#123;<span class="variable">$search</span>:<span class="string">"aa bb"</span>&#125;&#125;,&#123;score:&#123;<span class="variable">$meta</span>:textScore&#125;&#125;).sort(&#123;score:&#123;<span class="variable">$meta</span>:textScore&#125;&#125;) //进行查找时，另取出一个score对相似度进行评分,并进行排序</div><div class="line">db.tablename.find(&#123;area:&#123;<span class="variable">$near</span>:[1,1],<span class="variable">$maxDistance</span>:10&#125;&#125;) //根据area字段查询距离[1,1]最近的10个点记录</div><div class="line">db.tablename.find(&#123;area:&#123;<span class="variable">$geoWithin</span>:&#123;<span class="variable">$box</span>:[[0,0],[3,3]]&#125;&#125;&#125;) //查询矩形[0,0]到[3,3]之间的点 </div><div class="line">db.tablename.find(&#123;area:&#123;<span class="variable">$geoWithin</span>:&#123;<span class="variable">$center</span>:[[0,0],5]&#125;&#125;&#125;) //查询以[0,0]为圆心5为半径之间的点</div><div class="line">db.tablename.find(&#123;area:&#123;<span class="variable">$geoWithin</span>:&#123;<span class="variable">$polygon</span>:[[0,0],[0,1],[1,1],[2,2]]&#125;&#125;&#125;) //查询以polygon中的几个点形成的多边形中的点 </div><div class="line">db.tablename.find().count()  //查询dbname记录数</div></pre></td></tr></table></figure>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.tablename.insert(&#123;x:2,_id:1&#125;) //插入x为2,_id为1的数据，_id类似主键不可重复</div></pre></td></tr></table></figure>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">db.tablename.update(&#123;x:1&#125;,&#123;x:999&#125;) //将x为1的记录更新为x为999</div><div class="line">db.tablename.update(&#123;x:1&#125;,&#123;<span class="variable">$set</span>:&#123;x:999&#125;&#125;) //<span class="variable">$set</span>为部分更新操作符，假设除了x外还有z,y等则不被覆盖。</div><div class="line">db.tablename.update(&#123;x:100&#125;,&#123;x:999&#125;,<span class="literal">true</span>) //如果查询的数据不存在，自动插入一条</div></pre></td></tr></table></figure>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//1.在插入数据前创建索引</div><div class="line">db.tablename.getIndexes() //获取表的索引</div><div class="line">db.tablename.ensureIndex(&#123;x:1&#125;) //创建索引 &#123;x:1&#125;表示升序 &#123;x:-1&#125;表示降序</div><div class="line">db.tablename.ensureIndex(&#123;x:1，y:1&#125;) //以x，y建立复合索引</div><div class="line">db.tablename.ensureIndex(&#123;x:1&#125;，&#123;name:<span class="string">"normal_index"</span>&#125;) //建立索引并命名为normal_index 删除索引可以使用该名称</div><div class="line">db.tablename.ensureIndex(&#123;time:1&#125;,&#123;expireAfterSeconds:10&#125;) //以time建立过期索引，插入的数据将于10秒后被删除，time必须是isodate不能是时间戳</div><div class="line">db.tablename.ensureIndex(&#123;key:<span class="string">"text"</span>&#125;) //在tablename这个集合的key字段建立全文索引</div><div class="line">db.tablename.ensureIndex(&#123;key_1:<span class="string">"text"</span>,key_2:<span class="string">"text"</span>&#125;) //以key_1,key_2建立复合全文索引</div><div class="line">db.tablename.ensureIndex(&#123;<span class="string">"$**"</span>:<span class="string">"text"</span>&#125;) //在tablename这个集合的所有字段建立全文索引</div><div class="line">db.tablename.dropIndex(&#123;x:1&#125;)||db.tablename.dropIndex(<span class="string">"normal_index"</span>) //删除索引</div><div class="line">db.tablename.ensureIndex(&#123;x:1，y:1&#125;，&#123;unique:<span class="literal">true</span>&#125;) //建立x,y唯一索引。即x,y均相同的数据无法同时插入</div><div class="line">db.tablename.ensureIndex(&#123;area:<span class="string">"2d"</span>&#125;) //在tablename这个集合的area字段建立2d索引</div><div class="line">db.tablename.ensureIndex(&#123;area:<span class="string">"2dsphere"</span>&#125;) //在tablename这个集合的area字段建立2dsphere(球面距离)索引</div></pre></td></tr></table></figure>
+<h1 id="了解事项"><a href="#了解事项" class="headerlink" title="了解事项"></a>了解事项</h1><p>mongo可以使用js语法进行操作，如for(i=3,i&lt;100,i++)db.tablename_collection.insert({x:i})</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/10/centos-6-5-yum-安装lnmp/" rel="next" title="centos 6.5 yum 安装lnmp">
+                <i class="fa fa-chevron-left"></i> centos 6.5 yum 安装lnmp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/25/正则表达式基本语法/" rel="prev" title="正则表达式基本语法">
+                正则表达式基本语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/20/mongoDB常用查询命令/"
+           data-title="mongoDB常用查询命令" data-url="http://yoursite.com/2017/01/20/mongoDB常用查询命令/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="zhiqin_guo" />
+          <p class="site-author-name" itemprop="name">zhiqin_guo</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#增删改查操作"><span class="nav-number">1.</span> <span class="nav-text">增删改查操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询"><span class="nav-number">1.1.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入"><span class="nav-number">1.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新"><span class="nav-number">1.3.</span> <span class="nav-text">更新</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#了解事项"><span class="nav-number">3.</span> <span class="nav-text">了解事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhiqin_guo</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xiaoyang7545"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
