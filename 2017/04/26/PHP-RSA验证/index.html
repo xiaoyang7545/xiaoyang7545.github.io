@@ -98,7 +98,7 @@ openssl genrsa -out rsa_private_key.pem 1024
 
 openssl genrsa -out rsa_private_key.pem 1024 
 公钥：即RSA私钥，按照手册，按以下方式生成：">
-<meta property="og:updated_time" content="2017-04-26T03:03:23.372Z">
+<meta property="og:updated_time" content="2018-09-10T06:05:28.861Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP-RSA验证">
 <meta name="twitter:description" content="准备工作php的openssl扩展里已经封装好了验签的方法openssl_verify。如果在Windows下的php.ini需要开启Openssl模块： extension=php_openssl.dll
@@ -354,12 +354,7 @@ openssl genrsa -out rsa_private_key.pem 1024
 </code></pre><h3 id="公钥："><a href="#公钥：" class="headerlink" title="公钥："></a>公钥：</h3><pre><code>即RSA私钥，按照手册，按以下方式生成：
 
 openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
-</code></pre><p>签名函数<br>···php<br> &lt;?php<br> /**</p>
-<ul>
-<li>签名字符串</li>
-<li>@param $prestr 需要签名的字符串</li>
-<li>return 签名结果<br>*/<br>function rsaSign($prestr) {<br> $public_key= file_get_contents(‘rsa_private_key.pem’);<br> $pkeyid = openssl_get_privatekey($public_key);<br> openssl_sign($prestr, $sign, $pkeyid);<br> openssl_free_key($pkeyid);<br> $sign = base64_encode($sign);<br> return $sign;<br>}<br>?&gt;<br>```</li>
-</ul>
+</code></pre><p>签名函数<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 签名字符串</div><div class="line"> * <span class="doctag">@param</span> $prestr 需要签名的字符串</div><div class="line"> * return 签名结果</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">rsaSign</span><span class="params">($prestr)</span> </span>&#123;</div><div class="line">    $public_key= file_get_contents(<span class="string">'rsa_private_key.pem'</span>);</div><div class="line">    $pkeyid = openssl_get_privatekey($public_key);</div><div class="line">    openssl_sign($prestr, $sign, $pkeyid);</div><div class="line">    openssl_free_key($pkeyid);</div><div class="line">    $sign = base64_encode($sign);</div><div class="line">    <span class="keyword">return</span> $sign;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -395,6 +390,10 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/10/子页面iframe跨域执行父页面定义的JS方法/" rel="prev" title="子页面iframe跨域执行父页面定义的JS方法">
+                子页面iframe跨域执行父页面定义的JS方法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -468,7 +467,7 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -535,7 +534,7 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
