@@ -338,7 +338,9 @@
       
         
           
-          12345678910111213141516171819202122232425262728293031var commonReload = false;$(document).ready(function() &#123;	if (!!(window.history &amp;&amp; his
+          做过H5前端开发的都知道，当页面从A跳转到B之后，此时按下浏览器的返回按钮，页面将返回到A，假如A页面的数据是通过ajax加载的，那么此时返回到A页面时页面将是空白的，即数据不会重新加载。
+以下我将提供一种方法，可以在浏览器后退或前进到历史页面时重新加载ajax数据。
+把这段代码封装成通用的js引入
           ...
           <!--noindex-->
           <div class="post-button text-center">
